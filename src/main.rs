@@ -1,5 +1,4 @@
 use std::process;
-use ::rand::Rng;
 use macroquad::prelude::*;
 
 struct Paddle {
@@ -15,7 +14,7 @@ struct Ball {
     name: String,
     xpos: f32,
     ypos: f32,
-    radius: f32,
+    radius: f32, 
     speed: f32,
     colour: Color,
 }
@@ -28,6 +27,7 @@ impl Paddle {
     fn log_position(&mut self) {
         println!("(Paddle) {}: xpos={} ypos={}", self.name, self.xpos, self.ypos);
     }
+    
     fn check_if_out_of_bounds(&mut self) {
         if self.ypos <= -1.0 {
             self.ypos = 1.0;
@@ -65,8 +65,6 @@ impl Ball {
 }
 #[macroquad::main("Kieran's Pong in Rust (macroquad)")]
 async fn main() {
-    let secret_number = ::rand::thread_rng().gen_range(1..=100);
-    println!("(Game) secret_number = {}",secret_number);
     let mut player1 = Paddle {
         name: "player1".to_string(),
         xpos: 10.0,
