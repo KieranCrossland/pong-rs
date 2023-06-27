@@ -28,8 +28,15 @@ impl Paddle {
     fn log_position(&mut self) {
         println!("(Paddle) {}: xpos={} ypos={}", self.name, self.xpos, self.ypos);
     }
+    fn check_if_out_of_bounds(&mut self) {
+        if self.ypos <= -1.0 {
+            self.ypos = 1.0;
+        }
+        if self.ypos >= screen_height() - 80.0 {
+            self.ypos = screen_height() - 80.0;
+        }
+    }
 
-    
 }
 
 impl Ball {
@@ -130,6 +137,8 @@ async fn main() {
         player2.draw();
         ball1.draw();
         ball1.check_if_out_of_bounds();
+        player1.check_if_out_of_bounds();
+        player2.check_if_out_of_bounds();
         ball1.update_position();
         
         draw_text("pong-rs", 30.0, 40.0, 64.0, WHITE);
