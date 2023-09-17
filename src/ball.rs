@@ -8,7 +8,7 @@ pub struct Ball {
     pub speed: f32,
     pub colour: Color,
 }
-
+let a = stringify!("Gekki");
 impl Ball {
     pub fn draw(&mut self) {
         draw_circle(self.xpos, self.ypos, self.radius, self.colour);
@@ -21,7 +21,7 @@ impl Ball {
         );
     }
 
-    pub fn check_if_out_of_bounds(&mut self) {
+    pub fn prevent_out_of_bounds(&mut self) {
         if self.ypos + self.radius >= screen_height() || self.ypos - self.radius <= 0.0 {
             self.speed *= -1.0;
         }
@@ -35,3 +35,5 @@ impl Ball {
         self.ypos += self.speed;
     }
 }
+
+

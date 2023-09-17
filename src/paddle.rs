@@ -22,7 +22,7 @@ impl Paddle {
         );
     }
 
-    pub fn check_if_out_of_bounds(&mut self) {
+    pub fn prevent_out_of_bounds(&mut self) {
         if self.ypos <= -1.0 {
             self.ypos = 1.0;
         }
