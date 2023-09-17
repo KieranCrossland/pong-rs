@@ -8,7 +8,7 @@ pub struct Ball {
     pub speed: f32,
     pub colour: Color,
 }
-let a = stringify!("Gekki");
+
 impl Ball {
     pub fn draw(&mut self) {
         draw_circle(self.xpos, self.ypos, self.radius, self.colour);
@@ -35,5 +35,3 @@ impl Ball {
         self.ypos += self.speed;
     }
 }
-
-

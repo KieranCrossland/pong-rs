@@ -64,23 +64,21 @@ async fn main() {
         if is_key_down(KeyCode::D) {
             ball1.xpos += ball1.speed;
         }
-        {
-            //draw scope
-            draw_text("pong-rs", 30.0, 40.0, 64.0, WHITE);
-            player1.draw();
-            player2.draw();
-            ball1.draw();
-        }
-        {
-            //collision scope
-            ball1.prevent_out_of_bounds();
-            player1.prevent_out_of_bounds();
-            player2.prevent_out_of_bounds();
-        }
-        {
-            //bot movement scope
-            ball1.update_position();
-        }
+
+        //draw
+        draw_text("pong-rs", 30.0, 40.0, 64.0, WHITE);
+        player1.draw();
+        player2.draw();
+        ball1.draw();
+
+        //collision
+        ball1.prevent_out_of_bounds();
+        player1.prevent_out_of_bounds();
+        player2.prevent_out_of_bounds();
+
+        //bot movement
+        ball1.update_position();
+
         next_frame().await;
     }
 }
