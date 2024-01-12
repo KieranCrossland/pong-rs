@@ -28,7 +28,7 @@ async fn main() {
     let mut ball = entity::Ball {
         x_pos: screen_width() / 2.0,
         y_pos: screen_height() / 2.0,
-        y_speed: 5.0,
+        y_speed: 4.0,
         x_speed: 4.0,
         radius: 25.0,
         colour: WHITE,
@@ -91,6 +91,14 @@ async fn main() {
 
         clear_background(BLACK);
 
+        draw_text(&player1.score.to_string(), 10.0, 40.0, 40.0, player1.colour);
+        draw_text(
+            &player2.score.to_string(),
+            screen_width() - 30.0,
+            40.0,
+            40.0,
+            player2.colour,
+        );
         ball.draw();
         player1.draw();
         player2.draw();
@@ -101,13 +109,11 @@ async fn main() {
 
 fn on_player_scored(b: &mut entity::Ball, r1: &mut entity::Paddle, r2: &mut entity::Paddle) {
     if b.x_pos - b.radius <= 0.0 {
-        r1.score += 1;
-        println!("player 2 score: {} ", r1.score);
+        r2.score += 1;
         b.reset();
     }
     if b.x_pos + b.radius >= screen_width() {
-        r2.score += 1;
-        println!("player 1 score: {} ", r2.score);
+        r1.score += 1;
         b.reset();
     }
 }
