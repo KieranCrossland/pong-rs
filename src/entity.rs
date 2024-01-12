@@ -7,7 +7,6 @@ pub struct Ball {
     pub y_speed: f32,
     pub radius: f32,
     pub colour: Color,
-    pub id: usize,
 }
 
 pub struct Paddle {
@@ -18,6 +17,7 @@ pub struct Paddle {
     pub width: f32,
     pub colour: Color,
     pub id: usize,
+    pub score: u16,
 }
 
 impl Ball {
@@ -34,13 +34,16 @@ impl Ball {
             self.y_speed = -self.y_speed;
         }
     }
-
+    pub fn reset(&mut self) {
+        self.x_pos = screen_width() / 2.0;
+        self.y_pos = screen_height() / 2.0;
+    }
     pub fn draw(&self) {
         draw_circle(self.x_pos, self.y_pos, self.radius, self.colour);
     }
 
-    fn log_pos(&self) {
-        println!("id: {} x: {} y: {}", self.id, self.x_pos, self.y_pos);
+    pub fn log_pos(&self) {
+        println!("ball: x: {} y: {}", self.x_pos, self.y_pos);
     }
 }
 
@@ -51,7 +54,7 @@ impl Paddle {
         draw_rectangle(self.x_pos, self.y_pos, self.width, self.height, self.colour);
     }
 
-    fn log_pos(&self) {
+    pub fn log_pos(&self) {
         println!("id: {} x: {} y: {}", self.id, self.x_pos, self.y_pos);
     }
     pub fn control(&mut self) {
@@ -71,5 +74,27 @@ impl Paddle {
                 self.y_pos -= self.y_speed;
             }
         }
+    }
+}
+
+fn clamp(val: f32, min: f32, max: f32) -> f32 {
+    if val < min {
+        return min;
+    } else if val > max {
+        return max;
+    } else {
+        return val;
+    }
+}
+
+pub fn check_collision_circle_rect(b: &Ball, mut r: &Paddle) -> bool {
+    let closest_x = clamp(b.x_pos, r.x_pos, r.x_pos + r.width);
+    let closest_y = clamp(b.y_pos, r.y_pos, r.y_pos + r.height);
+    let distance_x = b.x_pos - closest_x;
+    let distance_y = b.y_pos - closest_y;
+    if (distance_x * distance_x + distance_y * distance_y) < (b.radius * b.radius) {
+        return true;
+    } else {
+        return false;
     }
 }
