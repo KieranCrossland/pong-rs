@@ -1,37 +1,37 @@
 use macroquad::prelude::*;
 
+#[allow(dead_code)]
+
 pub struct Ball {
-    pub name: String,
-    pub xpos: f32,
-    pub ypos: f32,
+    pub x_pos: f32,
+    pub y_pos: f32,
+    pub x_speed: f32,
+    pub y_speed: f32,
     pub radius: f32,
-    pub speed: f32,
     pub colour: Color,
+    pub name: &'static str,
 }
 
 impl Ball {
-    pub fn draw(&mut self) {
-        draw_circle(self.xpos, self.ypos, self.radius, self.colour);
+    pub fn update(&mut self) {
+            self.y_pos += self.y_speed;
+            self.x_pos += self.x_speed;
     }
 
-    pub fn log_position(&mut self) {
-        println!(
-            "(Ball) {}: xpos={} ypos={}",
-            self.name, self.xpos, self.ypos
-        );
-    }
-
-    pub fn prevent_out_of_bounds(&mut self) {
-        if self.ypos + self.radius >= screen_height() || self.ypos - self.radius <= 0.0 {
-            self.speed *= -1.0;
+    pub fn reverse_if_out_of_window(&mut self) {
+        if self.x_pos < 0.0 + self.radius || self.x_pos + self.radius > screen_width() {
+            self.x_speed =-self.x_speed;
         }
-        if self.xpos - 200.0 + self.radius >= screen_height() || self.xpos - self.radius <= 0.0 {
-            self.speed *= -1.0;
+
+        if self.y_pos - self.radius < 0.0 || self.y_pos + self.radius > screen_height() {
+            self.y_speed = -self.y_speed;
         }
     }
-
-    pub fn update_position(&mut self) {
-        self.xpos += self.speed;
-        self.ypos += self.speed;
+    pub fn draw(&self) {
+        draw_circle(self.x_pos, self.y_pos, self.radius, self.colour);
     }
+
+    pub fn log_pos(&self) {
+        println!("{} x: {} y: {}",self.name, self.x_pos, self.y_pos);
+    } 
 }

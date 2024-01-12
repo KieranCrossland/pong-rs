@@ -1,33 +1,24 @@
 use macroquad::prelude::*;
 
 pub struct Paddle {
-    pub name: String,
-    pub xpos: f32,
-    pub ypos: f32,
-    pub width: f32,
+    pub x_pos: f32,
+    pub y_pos: f32,
+    pub y_speed: f32,
     pub height: f32,
-    pub speed: f32,
-    pub colour: Color,
+    pub width: f32,
+	pub colour: Color,
+	pub name: &'static str,
 }
 
 impl Paddle {
-    pub fn draw(&mut self) {
-        draw_rectangle(self.xpos, self.ypos, self.width, self.height, self.colour);
+	pub fn update(&mut self) {
+	}
+    
+	pub fn draw(&self) {
+        draw_rectangle(15.0, self.y_pos, self.width, self.height, self.colour);
     }
 
-    pub fn log_position(&mut self) {
-        println!(
-            "(Ball) {}: xpos={} ypos={}",
-            self.name, self.xpos, self.ypos
-        );
-    }
-
-    pub fn prevent_out_of_bounds(&mut self) {
-        if self.ypos <= -1.0 {
-            self.ypos = 1.0;
-        }
-        if self.ypos >= screen_height() - 80.0 {
-            self.ypos = screen_height() - 80.0;
-        }
+    pub fn log_pos(&self) {
+        println!("{} x: {} y: {}",self.name, self.x_pos, self.y_pos);
     }
 }
