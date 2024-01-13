@@ -22,8 +22,8 @@ pub struct Paddle {
 
 impl Ball {
     pub fn update(&mut self) {
-        self.y_pos += self.y_speed;
-        self.x_pos += self.x_speed;
+        self.y_pos += self.y_speed * get_frame_time();
+        self.x_pos += self.x_speed * get_frame_time();
     }
 
     pub fn reverse_if_out_of_window(&mut self) {
@@ -60,18 +60,18 @@ impl Paddle {
     pub fn control(&mut self) {
         if self.id == 0 {
             if is_key_down(KeyCode::S) {
-                self.y_pos += self.y_speed;
+                self.y_pos += self.y_speed * get_frame_time();
             }
             if is_key_down(KeyCode::W) {
-                self.y_pos -= self.y_speed;
+                self.y_pos -= self.y_speed * get_frame_time();
             }
         }
         if self.id == 1 {
             if is_key_down(KeyCode::Down) {
-                self.y_pos += self.y_speed;
+                self.y_pos += self.y_speed * get_frame_time();
             }
             if is_key_down(KeyCode::Up) {
-                self.y_pos -= self.y_speed;
+                self.y_pos -= self.y_speed * get_frame_time();
             }
         }
     }

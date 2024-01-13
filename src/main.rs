@@ -28,16 +28,16 @@ async fn main() {
     let mut ball = entity::Ball {
         x_pos: screen_width() / 2.0,
         y_pos: screen_height() / 2.0,
-        y_speed: 4.0,
-        x_speed: 4.0,
+        y_speed: 350.0,
+        x_speed: 350.0,
         radius: 25.0,
         colour: WHITE,
     };
 
     let mut player1 = entity::Paddle {
-        x_pos: 15.0,
+        x_pos: 25.0,
         y_pos: screen_height() / 2.0 - 100.0,
-        y_speed: 5.0,
+        y_speed: 500.0,
         height: 100.0,
         width: 25.0,
         colour: GREEN,
@@ -46,9 +46,9 @@ async fn main() {
     };
 
     let mut player2 = entity::Paddle {
-        x_pos: screen_width() - 45.0,
+        x_pos: screen_width() - 50.0,
         y_pos: screen_height() / 2.0 - 100.0,
-        y_speed: 5.0,
+        y_speed: 500.0,
         height: 100.0,
         width: 25.0,
         colour: BLUE,
@@ -66,6 +66,7 @@ async fn main() {
         ball.update();
         player1.update();
         ball.reverse_if_out_of_window();
+
         on_player_scored(&mut ball, &mut player1, &mut player2);
 
         if player1.score >= SCORE_REQUIRED_FOR_WIN {
@@ -76,7 +77,6 @@ async fn main() {
             println!("player 2 wins!");
             reset_game(&mut ball, &mut player1, &mut player2);
         }
-
         if enable_logging {
             player1.log_pos();
             player2.log_pos();
@@ -91,10 +91,10 @@ async fn main() {
 
         clear_background(BLACK);
 
-        draw_text(&player1.score.to_string(), 10.0, 40.0, 40.0, player1.colour);
+        draw_text(&player1.score.to_string(), 50.0, 40.0, 40.0, player1.colour);
         draw_text(
             &player2.score.to_string(),
-            screen_width() - 30.0,
+            screen_width() - 70.0,
             40.0,
             40.0,
             player2.colour,
